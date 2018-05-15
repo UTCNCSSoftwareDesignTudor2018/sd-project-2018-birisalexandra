@@ -14,4 +14,5 @@ public class CustomerService {
     public void insertCustomer(Customer customer) {
         customerJpaRepository.save(customer);
     }
+
 }

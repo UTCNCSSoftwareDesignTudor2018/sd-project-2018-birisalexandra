@@ -69,7 +69,7 @@ public class NewUserController {
     }
 
     public void handleButtonRegister(javafx.event.ActionEvent event) {
-        if (userService.checkUsername(username.getText()) == false) {
+        if (!userService.checkUsername(username.getText())) {
             error.setText("Username already taken!");
             username.clear();
         }
@@ -77,10 +77,22 @@ public class NewUserController {
             User user = new User(0, username.getText(), password.getText(), 1);
             ShippingInfo shippingInfo = new ShippingInfo(0, address.getText(), Integer.valueOf(age.getText()), phone.getText());
             Customer customer = new Customer(0, name.getText(), shippingInfo, user);
-            userService.insertUser(user);
-            shippingService.addNewShipping(shippingInfo);
-            customerService.insertCustomer(customer);
-            error.setText("Account successfully created!");
+
+            if (!shippingService.checkAge(shippingInfo)) {
+                error.setText("Age must be greater than 12!");
+                age.clear();
+            }
+            else
+                if (!shippingService.checkPhone(shippingInfo)) {
+                    error.setText("Phone number must have 10 digits!");
+                    phone.clear();
+                }
+                else {
+                    userService.insertUser(user);
+                    shippingService.addNewShipping(shippingInfo);
+                    customerService.insertCustomer(customer);
+                    error.setText("Account successfully created!");
+                }
         }
     }
 }
