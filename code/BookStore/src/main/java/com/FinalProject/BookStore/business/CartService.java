@@ -16,12 +16,20 @@ public class CartService {
     CartJpaRepository cartJpaRepository;
 
     public List<Product> findProducts(User user) {
-        return cartJpaRepository.findAllByUserId(user.getUserId());
+        return cartJpaRepository.findAllByUser(user);
     }
 
-    public void addToCart(Product product, User user) {
-        List<Product> newList = findProducts(user);
-        ShoppingCart newCart = new ShoppingCart(0, user, newList);
-        cartJpaRepository.save(newCart);
+    public void addToCart(ShoppingCart cart, Product product) {
+        List<Product> newList = findProducts(cart.getUser());
+        newList.add(product);
+        cart.setProducts(newList);
+        cartJpaRepository.save(cart);
+    }
+
+    public void removeFromCart(ShoppingCart cart, Product product) {
+        List<Product> newList = findProducts(cart.getUser());
+        newList.remove(product);
+        cart.setProducts(newList);
+        cartJpaRepository.save(cart);
     }
 }

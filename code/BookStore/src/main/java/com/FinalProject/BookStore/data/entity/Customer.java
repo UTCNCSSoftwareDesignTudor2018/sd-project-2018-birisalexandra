@@ -4,7 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="customer")
-public class Customer extends User{
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private Integer customerId;
 
     @Column
     private String name;
@@ -13,11 +18,33 @@ public class Customer extends User{
     @JoinColumn(name="shipping_id")
     private ShippingInfo info;
 
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     public Customer() {}
 
-    public Customer(Integer userId, String username, String password, Integer type, ShippingInfo info) {
-        super(userId, username, password, type);
+    public Customer(Integer customerId, String name, ShippingInfo info, User user) {
+        this.customerId = customerId;
+        this.name = name;
         this.info = info;
+        this.user = user;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ShippingInfo getInfo() {
@@ -26,5 +53,13 @@ public class Customer extends User{
 
     public void setInfo(ShippingInfo info) {
         this.info = info;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

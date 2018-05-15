@@ -22,7 +22,8 @@ public class ShippingInfo {
 
     public ShippingInfo() {}
 
-    public ShippingInfo(String address, Integer age, String phone) {
+    public ShippingInfo(Integer shippingId, String address, Integer age, String phone) {
+        this.shippingId = shippingId;
         this.address = address;
         this.age = age;
         this.phone = phone;
