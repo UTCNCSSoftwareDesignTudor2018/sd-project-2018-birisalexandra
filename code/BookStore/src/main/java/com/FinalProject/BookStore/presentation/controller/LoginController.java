@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -37,21 +38,28 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ApplicationContext context;
+
     public void handelButtonLogIn(javafx.event.ActionEvent event) throws IOException {
         Integer type = userService.checkCredentials(username.getText(), password.getText());
         if (type == 2)
             error.setText("Username or password are incorrect!");
         else
             if (type == 0) {
-                Parent root2 = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/AdminView.fxml"));
+                fxmlLoader.setControllerFactory(context::getBean);
+                Parent root2 = fxmlLoader.load();
                 Scene scene = new Scene(root2, 600, 400);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene);
                 window.show();
             }
             else {
-                Parent root2 = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
-                Scene scene = new Scene(root2, 600, 400);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserView.fxml"));
+                fxmlLoader.setControllerFactory(context::getBean);
+                Parent root2 = fxmlLoader.load();
+                Scene scene = new Scene(root2, 700, 450);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene);
                 window.show();
@@ -59,7 +67,9 @@ public class LoginController {
     }
 
     public void handleButtonNewUser(javafx.event.ActionEvent event) throws IOException {
-        Parent root2 = FXMLLoader.load(getClass().getResource("/NewUser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/NewUser.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
         Scene scene = new Scene(root2, 600, 400);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);

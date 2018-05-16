@@ -13,9 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-//@EnableJpaRepositories("data.repository")
-//@EntityScan("data.entity")
-//@ComponentScan(basePackages = {"business", "presentation.controller"})
 public class BookStoreApplication extends Application {
 
    private ConfigurableApplicationContext springContext;

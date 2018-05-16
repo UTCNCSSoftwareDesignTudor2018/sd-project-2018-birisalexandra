@@ -31,4 +31,8 @@ public class UserService {
     public void insertUser(User user) {
         userJpaRepository.save(user);
     }
+
+    public User findByUsername(String username) {
+        return userJpaRepository.findByUsername(username);
+    }
 }

@@ -1,6 +1,5 @@
 package com.FinalProject.BookStore.presentation.controller;
 
-import com.FinalProject.BookStore.business.CartService;
 import com.FinalProject.BookStore.business.CustomerService;
 import com.FinalProject.BookStore.business.ShippingService;
 import com.FinalProject.BookStore.business.UserService;
@@ -17,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -60,8 +60,13 @@ public class NewUserController {
     @Autowired
     ShippingService shippingService;
 
+    @Autowired
+    ApplicationContext context;
+
     public void handleButtonBack(javafx.event.ActionEvent event) throws IOException {
-        Parent root2 = FXMLLoader.load(getClass().getResource("/LoginPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LoginPage.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
         Scene scene = new Scene(root2, 600, 400);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -76,7 +81,6 @@ public class NewUserController {
         else {
             User user = new User(0, username.getText(), password.getText(), 1);
             ShippingInfo shippingInfo = new ShippingInfo(0, address.getText(), Integer.valueOf(age.getText()), phone.getText());
-            Customer customer = new Customer(0, name.getText(), shippingInfo, user);
 
             if (!shippingService.checkAge(shippingInfo)) {
                 error.setText("Age must be greater than 12!");
@@ -90,6 +94,8 @@ public class NewUserController {
                 else {
                     userService.insertUser(user);
                     shippingService.addNewShipping(shippingInfo);
+
+                    Customer customer = new Customer(0, name.getText(), shippingService.findByPhone(phone.getText()), userService.findByUsername(username.getText()));
                     customerService.insertCustomer(customer);
                     error.setText("Account successfully created!");
                 }

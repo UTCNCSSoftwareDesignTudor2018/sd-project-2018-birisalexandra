@@ -26,4 +26,8 @@ public class ShippingService {
         PhoneValidator validator = new PhoneValidator();
         return validator.validate(info);
     }
+
+    public ShippingInfo findByPhone(String phone) {
+        return shippingJpaRepository.findByPhone(phone);
+    }
 }
