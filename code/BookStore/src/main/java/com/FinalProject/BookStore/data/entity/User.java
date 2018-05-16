@@ -60,4 +60,5 @@ public class User {
     public void setType(Integer type) {
         this.type = type;
     }
+
 }

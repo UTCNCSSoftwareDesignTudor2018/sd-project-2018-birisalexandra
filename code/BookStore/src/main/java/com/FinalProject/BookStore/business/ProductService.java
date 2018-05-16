@@ -20,4 +20,8 @@ public class ProductService {
     public List<Product> findAllProducts() {
         return productJpaRepository.findAll();
     }
+
+    public Product findByTitle(String title) {
+        return productJpaRepository.findByName(title);
+    }
 }

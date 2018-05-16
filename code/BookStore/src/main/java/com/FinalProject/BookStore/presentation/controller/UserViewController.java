@@ -2,8 +2,6 @@ package com.FinalProject.BookStore.presentation.controller;
 
 import com.FinalProject.BookStore.business.ProductService;
 import com.FinalProject.BookStore.data.entity.Product;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -44,8 +43,21 @@ public class UserViewController implements Initializable {
     @Autowired
     ProductService productService;
 
-    public void openBook() {
+    public void openBook() throws IOException {
+        String title = listView.getSelectionModel().getSelectedItem();
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/BookView.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
+
+        BookViewController bookView = context.getBean(BookViewController.class);
+        bookView.setProduct(productService.findByTitle(title));
+        bookView.init();
+
+        Scene scene = new Scene(root2, 600, 400);
+        Stage window = new Stage();
+        window.setScene(scene);
+        window.show();
     }
 
     public void handleCartButton(javafx.event.ActionEvent event) {
@@ -70,13 +82,10 @@ public class UserViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         List<Product> products = productService.findAllProducts();
         List<String> list = new ArrayList<>();
-        for(Product p : products) {
+        for(Product p : products)
             list.add(p.getName());
-            System.out.println(p.getName());
-        }
 
-        listView = new ListView<>();
-        ObservableList<String> items = FXCollections.observableArrayList(list);
-        listView.setItems(items);
+        listView.getItems().addAll(list);
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 }

@@ -44,10 +44,17 @@
          </font>
       </Text>
       <Button fx:id="newBook" defaultButton="true" layoutX="182.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleNewBook" text="Add new book" />
-      <Button fx:id="back" defaultButton="true" layoutX="424.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleBack" text="Log out" />
+      <Button fx:id="back" defaultButton="true" layoutX="416.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="25.0" prefWidth="94.0" text="Log out" />
       <Label fx:id="error" layoutX="373.0" layoutY="107.0" prefHeight="25.0" prefWidth="187.0" textFill="#ff4c4c">
          <font>
             <Font name="Berlin Sans FB" size="13.0" />
          </font></Label>
+      <Button fx:id="users" defaultButton="true" layoutX="416.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleUsers" prefHeight="25.0" prefWidth="94.0" text="View users" />
+      <Button fx:id="orders" defaultButton="true" layoutX="416.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleOrders" prefHeight="25.0" prefWidth="94.0" text="VIew orders" />
+      <Text layoutX="407.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose an action:" wrappingWidth="135.13671875">
+         <font>
+            <Font name="Berlin Sans FB" size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -5,6 +5,8 @@ import com.FinalProject.BookStore.data.repository.CustomerJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
 
@@ -15,4 +17,7 @@ public class CustomerService {
         customerJpaRepository.save(customer);
     }
 
+    public List<Customer> findAll() {
+        return customerJpaRepository.findAll();
+    }
 }
