@@ -1,6 +1,9 @@
 package com.FinalProject.BookStore.presentation.controller;
 
+import com.FinalProject.BookStore.business.CartService;
 import com.FinalProject.BookStore.data.entity.Product;
+import com.FinalProject.BookStore.data.entity.ShoppingCart;
+import com.FinalProject.BookStore.data.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -44,10 +45,17 @@ public class BookViewController {
     @FXML
     private Label price;
 
+    @FXML
+    private Label warning;
+
     private Product product;
+    private User user;
 
     @Autowired
     ApplicationContext context;
+
+    @Autowired
+    CartService cartService;
 
     public Product getProduct() {
         return product;
@@ -55,6 +63,14 @@ public class BookViewController {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void handleButtonBack(javafx.event.ActionEvent event) throws IOException {
@@ -68,7 +84,9 @@ public class BookViewController {
     }
 
     public void handleButtonCart(javafx.event.ActionEvent event) {
-
+        ShoppingCart toAdd = new ShoppingCart(0, user, product);
+        cartService.addToCart(toAdd);
+        warning.setText("Product added in your cart!");
     }
 
     public void init() {

@@ -1,6 +1,5 @@
 package com.FinalProject.BookStore.business.validator;
 
-import com.FinalProject.BookStore.data.entity.Customer;
 import com.FinalProject.BookStore.data.entity.ShippingInfo;
 
 public class AgeValidator implements Validator<ShippingInfo> {

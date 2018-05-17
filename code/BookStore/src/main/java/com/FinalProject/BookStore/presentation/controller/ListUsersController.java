@@ -2,8 +2,6 @@ package com.FinalProject.BookStore.presentation.controller;
 
 import com.FinalProject.BookStore.business.CustomerService;
 import com.FinalProject.BookStore.data.entity.Customer;
-import com.FinalProject.BookStore.data.entity.ShippingInfo;
-import com.FinalProject.BookStore.data.entity.User;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

@@ -1,6 +1,7 @@
 package com.FinalProject.BookStore.presentation.controller;
 
 import com.FinalProject.BookStore.business.UserService;
+import com.FinalProject.BookStore.data.entity.ShoppingCart;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class LoginController {
@@ -59,6 +61,10 @@ public class LoginController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserView.fxml"));
                 fxmlLoader.setControllerFactory(context::getBean);
                 Parent root2 = fxmlLoader.load();
+
+                BookViewController bookView = context.getBean(BookViewController.class);
+                bookView.setUser(userService.findByUsername(username.getText()));
+
                 Scene scene = new Scene(root2, 700, 450);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene);
