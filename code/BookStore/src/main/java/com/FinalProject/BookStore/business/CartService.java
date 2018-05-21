@@ -15,15 +15,19 @@ public class CartService {
     @Autowired
     CartJpaRepository cartJpaRepository;
 
-    public List<Product> findProducts(User user) {
-        return cartJpaRepository.findAllByUser(user);
-    }
-
-    public void addToCart(ShoppingCart cart) {
+    public void insertCart(ShoppingCart cart) {
         cartJpaRepository.save(cart);
     }
 
-    public void removeFromCart(ShoppingCart cart) {
-        cartJpaRepository.delete(cart);
+    public ShoppingCart findCartByUser(User user) {
+        return cartJpaRepository.findByUser(user);
     }
+
+    public void addToCart(ShoppingCart cart, Product product) {
+        List<Product> newList = cart.getProducts();
+        newList.add(product);
+        cart.setProducts(newList);
+        cartJpaRepository.save(cart);
+    }
+
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface CartJpaRepository extends JpaRepository<ShoppingCart, Integer> {
 
-    public List<Product> findAllByUser(User user);
+    public ShoppingCart findByUser(User user);
 }

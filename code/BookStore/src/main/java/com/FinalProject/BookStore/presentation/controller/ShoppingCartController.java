@@ -6,50 +6,42 @@ import com.FinalProject.BookStore.data.entity.ShoppingCart;
 import com.FinalProject.BookStore.data.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import sun.misc.BASE64Decoder;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 @Component
-public class BookViewController {
+public class ShoppingCartController implements Initializable {
 
     @FXML
-    private ImageView imageView;
-
-    @FXML
-    private Button addToCart;
+    private Button order;
 
     @FXML
     private Button back;
 
     @FXML
-    private Label title;
+    private ListView<String> listView;
 
     @FXML
-    private TextArea description;
+    private Label label;
 
     @FXML
     private Label price;
-
-    @FXML
-    private Label warning;
-
-    private Product product;
-    private User user;
 
     @Autowired
     ApplicationContext context;
@@ -57,13 +49,7 @@ public class BookViewController {
     @Autowired
     CartService cartService;
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    private User user;
 
     public User getUser() {
         return user;
@@ -71,6 +57,10 @@ public class BookViewController {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void handleButtonOrder(javafx.event.ActionEvent event) {
+
     }
 
     public void handleButtonBack(javafx.event.ActionEvent event) throws IOException {
@@ -83,29 +73,23 @@ public class BookViewController {
         window.show();
     }
 
-    public void handleButtonCart(javafx.event.ActionEvent event) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         ShoppingCart cart = cartService.findCartByUser(user);
-        cartService.addToCart(cart, product);
-        warning.setText("Product added in your cart!");
-    }
+        List<Product> products = cart.getProducts();
+        List<String> toShow = new ArrayList<>();
+        String spaces;
 
-    public void init() {
-        title.setText(product.getName());
-        description.setText(product.getDescription());
-        price.setText(product.getPrice().toString());
-
-        String rocketImgStr = product.getImage();
-        if(rocketImgStr!=null) {
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            ByteArrayInputStream rocketInputStream = null;
-            try {
-                rocketInputStream = new ByteArrayInputStream(base64Decoder.decodeBuffer(rocketImgStr));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Image rocketImg = new Image(rocketInputStream);
-            imageView.setImage(rocketImg);
+        float total = 0;
+        for (Product p: products) {
+            total += p.getPrice();
+            int nrOfSpaces = 80 - p.getName().length();
+            String space = new String(new char[nrOfSpaces]).replace('\0', ' ');
+            toShow.add(p.getName() + space + p.getPrice());
         }
+        price.setText("Total: " + total + " lei");
+        label.setText("You have " + products.size() + " item(s) in the cart!");
+
+        listView.getItems().addAll(toShow);
     }
 }

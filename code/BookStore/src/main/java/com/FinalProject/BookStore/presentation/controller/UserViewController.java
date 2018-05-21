@@ -60,12 +60,24 @@ public class UserViewController implements Initializable {
         window.show();
     }
 
-    public void handleCartButton(javafx.event.ActionEvent event) {
-
+    public void handleCartButton(javafx.event.ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ShoppingCart.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
+        Scene scene = new Scene(root2, 600, 400);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
-    public void handleAccountButton(javafx.event.ActionEvent event) {
-
+    public void handleAccountButton(javafx.event.ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyAccountView.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
+        Scene scene = new Scene(root2, 600, 400);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     public void handleLogOutButton(javafx.event.ActionEvent event) throws IOException {

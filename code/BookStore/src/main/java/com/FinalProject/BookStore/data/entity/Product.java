@@ -1,6 +1,8 @@
 package com.FinalProject.BookStore.data.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="product")
@@ -22,6 +24,9 @@ public class Product {
 
     @Column
     private String description;
+
+    @ManyToMany(fetch=FetchType.EAGER, mappedBy = "products")
+    private List<ShoppingCart> carts = new ArrayList<>();
 
     public Product() {
     }
@@ -72,6 +77,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<ShoppingCart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<ShoppingCart> carts) {
+        this.carts = carts;
     }
 
     @Override

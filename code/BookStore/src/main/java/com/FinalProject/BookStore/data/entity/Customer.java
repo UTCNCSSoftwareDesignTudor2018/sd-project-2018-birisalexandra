@@ -62,4 +62,13 @@ public class Customer {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public static class CustomerBuilder {
+        private Integer customerId;
+        private String name;
+        private ShippingInfo info;
+        private User user;
+
+
+    }
 }

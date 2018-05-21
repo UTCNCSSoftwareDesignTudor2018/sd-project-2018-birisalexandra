@@ -1,9 +1,11 @@
 package com.FinalProject.BookStore.data.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="shopping_info")
+@Table(name="shopping_cart")
 public class ShoppingCart {
 
     @Id
@@ -15,17 +17,20 @@ public class ShoppingCart {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "cart_product",
+        joinColumns = { @JoinColumn(name = "cart_id")},
+        inverseJoinColumns = { @JoinColumn(name = "product_id")})
+    private List<Product> products = new ArrayList<>();
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(Integer cartId, User user, Product products) {
+    public ShoppingCart(Integer cartId, User user, List<Product> products) {
         this.cartId = cartId;
         this.user = user;
-        this.product = products;
+        this.products = products;
     }
 
     public Integer getCartId() {
@@ -44,11 +49,11 @@ public class ShoppingCart {
         this.user = user;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

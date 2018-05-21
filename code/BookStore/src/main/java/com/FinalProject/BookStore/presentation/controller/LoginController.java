@@ -65,6 +65,12 @@ public class LoginController {
                 BookViewController bookView = context.getBean(BookViewController.class);
                 bookView.setUser(userService.findByUsername(username.getText()));
 
+                ShoppingCartController cartController = context.getBean(ShoppingCartController.class);
+                cartController.setUser(userService.findByUsername(username.getText()));
+
+                MyAccountController accountController = context.getBean(MyAccountController.class);
+                accountController.setUser(userService.findByUsername(username.getText()));
+
                 Scene scene = new Scene(root2, 700, 450);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene);

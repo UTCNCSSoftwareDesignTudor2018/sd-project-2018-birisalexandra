@@ -1,10 +1,12 @@
 package com.FinalProject.BookStore.presentation.controller;
 
+import com.FinalProject.BookStore.business.CartService;
 import com.FinalProject.BookStore.business.CustomerService;
 import com.FinalProject.BookStore.business.ShippingService;
 import com.FinalProject.BookStore.business.UserService;
 import com.FinalProject.BookStore.data.entity.Customer;
 import com.FinalProject.BookStore.data.entity.ShippingInfo;
+import com.FinalProject.BookStore.data.entity.ShoppingCart;
 import com.FinalProject.BookStore.data.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class NewUserController {
@@ -61,6 +64,9 @@ public class NewUserController {
     ShippingService shippingService;
 
     @Autowired
+    CartService cartService;
+
+    @Autowired
     ApplicationContext context;
 
     public void handleButtonBack(javafx.event.ActionEvent event) throws IOException {
@@ -94,9 +100,11 @@ public class NewUserController {
                 else {
                     userService.insertUser(user);
                     shippingService.addNewShipping(shippingInfo);
-
                     Customer customer = new Customer(0, name.getText(), shippingService.findByPhone(phone.getText()), userService.findByUsername(username.getText()));
                     customerService.insertCustomer(customer);
+
+                    ShoppingCart cart = new ShoppingCart(0, userService.findByUsername(username.getText()), new ArrayList<>());
+                    cartService.insertCart(cart);
                     error.setText("Account successfully created!");
                 }
         }

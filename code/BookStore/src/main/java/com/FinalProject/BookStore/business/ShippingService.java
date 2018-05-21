@@ -30,4 +30,11 @@ public class ShippingService {
     public ShippingInfo findByPhone(String phone) {
         return shippingJpaRepository.findByPhone(phone);
     }
+
+    public void updateShippingInfo(ShippingInfo info, String addres, String phone, Integer age) {
+        info.setAddress(addres);
+        info.setPhone(phone);
+        info.setAge(age);
+        shippingJpaRepository.save(info);
+    }
 }
