@@ -1,5 +1,8 @@
 package com.FinalProject.BookStore.data.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,10 @@ public class Product {
 
     @ManyToMany(fetch=FetchType.EAGER, mappedBy = "products")
     private List<ShoppingCart> carts = new ArrayList<>();
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(mappedBy = "productsBuy")
+    private List<Order> orders = new ArrayList<>();
 
     public Product() {
     }
@@ -85,6 +92,14 @@ public class Product {
 
     public void setCarts(List<ShoppingCart> carts) {
         this.carts = carts;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

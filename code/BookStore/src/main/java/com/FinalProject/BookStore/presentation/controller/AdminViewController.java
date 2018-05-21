@@ -114,12 +114,12 @@ public class AdminViewController {
     }
 
     public void handleOrders(javafx.event.ActionEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListOrders.fxml"));
-//        fxmlLoader.setControllerFactory(context::getBean);
-//        Parent root2 = fxmlLoader.load();
-//        Scene scene = new Scene(root2, 600, 400);
-//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        window.setScene(scene);
-//        window.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListOrders.fxml"));
+        fxmlLoader.setControllerFactory(context::getBean);
+        Parent root2 = fxmlLoader.load();
+        Scene scene = new Scene(root2, 600, 400);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 }

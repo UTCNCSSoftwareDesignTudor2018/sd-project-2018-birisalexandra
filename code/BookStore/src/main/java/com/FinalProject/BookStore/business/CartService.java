@@ -30,4 +30,9 @@ public class CartService {
         cartJpaRepository.save(cart);
     }
 
+    public void emptyCart(ShoppingCart cart) {
+        cart.getProducts().removeAll(cart.getProducts());
+        cartJpaRepository.save(cart);
+    }
+
 }

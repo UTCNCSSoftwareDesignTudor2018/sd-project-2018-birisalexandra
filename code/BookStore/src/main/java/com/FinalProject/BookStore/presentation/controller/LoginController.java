@@ -1,5 +1,6 @@
 package com.FinalProject.BookStore.presentation.controller;
 
+import com.FinalProject.BookStore.business.CustomerService;
 import com.FinalProject.BookStore.business.UserService;
 import com.FinalProject.BookStore.data.entity.ShoppingCart;
 import javafx.fxml.FXML;
@@ -39,6 +40,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     ApplicationContext context;

@@ -13,6 +13,8 @@ public class UserService {
 
     //return 0 for admin, 1 for user and 2 for not found
     public Integer checkCredentials(String username, String password) {
+        if(username.equals("") || password.equals(""))
+            return 2;
         User toCheck = userJpaRepository.findByUsername(username);
         if(toCheck.getPassword().equals(password))
             return toCheck.getType();

@@ -1,6 +1,10 @@
 package com.FinalProject.BookStore.presentation.controller;
 
 import com.FinalProject.BookStore.business.CartService;
+import com.FinalProject.BookStore.business.CustomerService;
+import com.FinalProject.BookStore.business.OrderService;
+import com.FinalProject.BookStore.business.UserService;
+import com.FinalProject.BookStore.data.entity.Order;
 import com.FinalProject.BookStore.data.entity.Product;
 import com.FinalProject.BookStore.data.entity.ShoppingCart;
 import com.FinalProject.BookStore.data.entity.User;
@@ -49,6 +53,12 @@ public class ShoppingCartController implements Initializable {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    CustomerService customerService;
+
     private User user;
 
     public User getUser() {
@@ -60,7 +70,16 @@ public class ShoppingCartController implements Initializable {
     }
 
     public void handleButtonOrder(javafx.event.ActionEvent event) {
-
+        ShoppingCart toBuy = cartService.findCartByUser(user);
+        float total = 0;
+        for (Product p: toBuy.getProducts())
+            total += p.getPrice();
+        Order order = new Order(0, customerService.findByUser(user), toBuy.getProducts(), total);
+        orderService.insertOrder(order);
+        label.setText("Order successfully made!");
+        price.setText("Total: 0 lei");
+        cartService.emptyCart(toBuy);
+        listView.getItems().clear();
     }
 
     public void handleButtonBack(javafx.event.ActionEvent event) throws IOException {
