@@ -21,7 +21,7 @@
             <Font name="Berlin Sans FB" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="title" layoutX="287.0" layoutY="46.0" prefHeight="33.0" prefWidth="244.0">
+      <Label fx:id="title" layoutX="271.0" layoutY="46.0" prefHeight="33.0" prefWidth="320.0">
          <font>
             <Font name="Berlin Sans FB" size="24.0" />
          </font>

@@ -1,5 +1,6 @@
 package com.FinalProject.BookStore.data.entity;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -24,43 +25,27 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(Integer customerId, String name, ShippingInfo info, User user) {
-        this.customerId = customerId;
-        this.name = name;
-        this.info = info;
-        this.user = user;
-    }
+   public Customer(CustomerBuilder builder) {
+        this.customerId = builder.customerId;
+        this.name = builder.name;
+        this.info = builder.info;
+        this.user = builder.user;
+   }
 
     public Integer getCustomerId() {
         return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ShippingInfo getInfo() {
         return info;
     }
 
-    public void setInfo(ShippingInfo info) {
-        this.info = info;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public static class CustomerBuilder {
@@ -69,6 +54,28 @@ public class Customer {
         private ShippingInfo info;
         private User user;
 
+        public CustomerBuilder setCustomerId(Integer id) {
+            this.customerId = id;
+            return this;
+        }
 
+        public CustomerBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CustomerBuilder setInfo(ShippingInfo info) {
+            this.info = info;
+            return this;
+        }
+
+        public CustomerBuilder setUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Customer build() {
+            return new Customer(this);
+        }
     }
 }

@@ -100,7 +100,7 @@ public class NewUserController {
                 else {
                     userService.insertUser(user);
                     shippingService.addNewShipping(shippingInfo);
-                    Customer customer = new Customer(0, name.getText(), shippingService.findByPhone(phone.getText()), userService.findByUsername(username.getText()));
+                    Customer customer = new Customer.CustomerBuilder().setCustomerId(0).setName(name.getText()).setInfo(shippingService.findByPhone(phone.getText())).setUser(userService.findByUsername(username.getText())).build();
                     customerService.insertCustomer(customer);
 
                     ShoppingCart cart = new ShoppingCart(0, userService.findByUsername(username.getText()), new ArrayList<>());
